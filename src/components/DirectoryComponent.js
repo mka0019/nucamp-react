@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
-
+import { Link } from 'react-router-dom';
 
 // This component will be responisble for rendering the
 // Cards with the campsite details
@@ -11,10 +11,12 @@ import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
 function RenderDirectoryItem({campsite}){
     return(
         <Card>
-        <CardImg width="100%" src={campsite.image} alt={campsite.name} />
-        <CardImgOverlay>
-            <CardTitle>{campsite.name}</CardTitle>
-        </CardImgOverlay>
+            <Link to={`/directory/${campsite.id}`}>
+                <CardImg width="100%" src={campsite.image} alt={campsite.name} />
+                <CardImgOverlay>
+                    <CardTitle>{campsite.name}</CardTitle>
+                </CardImgOverlay>
+            </Link>
         </Card>
     );
 }

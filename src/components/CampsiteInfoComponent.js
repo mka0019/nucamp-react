@@ -41,7 +41,7 @@ function CampsiteInfo(props){
             <div className="container">
                 <div className="row">
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.campsite.comments} />
+                    <RenderComments comments={props.comments} />
                 </div>
             </div>
         );
@@ -49,6 +49,9 @@ function CampsiteInfo(props){
     return <div/>;
 }
 
+// the props are ::
+//campsite={this.state.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
+//comments={this.state.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
 
 
 export default CampsiteInfo;

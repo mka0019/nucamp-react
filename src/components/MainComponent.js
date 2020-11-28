@@ -37,7 +37,17 @@ class Main extends Component {
                 // Note 1
                 />
             );
-        };
+        }
+        
+        // match comes from react's component (props)
+        const CampsiteWithId = ({ match}) => {
+            return(
+                <CampsiteInfo 
+                campsite={this.state.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
+                comments={this.state.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+                />
+            );
+        }
 
         return (
             <div>
@@ -45,7 +55,8 @@ class Main extends Component {
                 <Switch>
                     <Route path='/home' component={HomePage} />
                     <Route exact path='/directory' render={() => <Directory campsites={this.state.campsites} />} />
-                    <Route exact path='/contactus' component={Contact} />
+                    <Route path='/directory/:campsiteId' component={CampsiteWithId} />
+                    <Route exact path='/directory/:campsiteId'  />
                     {/* Note that unlike the <Route> for the Directory component, you use the attribute component instead of render above. That is because you do not need to pass any state data into the Contact component.  */}
                     <Redirect to='/home' />
                     {/* The Routes act as the case statements in switch statement */}
