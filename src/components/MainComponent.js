@@ -56,7 +56,7 @@ class Main extends Component {
                     <Route path='/home' component={HomePage} />
                     <Route exact path='/directory' render={() => <Directory campsites={this.state.campsites} />} />
                     <Route path='/directory/:campsiteId' component={CampsiteWithId} />
-                    <Route exact path='/directory/:campsiteId'  />
+                    <Route exact path='/contactus' component={Contact} />
                     {/* Note that unlike the <Route> for the Directory component, you use the attribute component instead of render above. That is because you do not need to pass any state data into the Contact component.  */}
                     <Redirect to='/home' />
                     {/* The Routes act as the case statements in switch statement */}
