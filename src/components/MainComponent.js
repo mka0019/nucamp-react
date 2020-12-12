@@ -9,6 +9,10 @@ import About from './AboutComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addComment, fetchCampsites } from '../redux/ActionCreators';
+import { actions } from 'react-redux-form'; //this will make a action creator named actions.reset available to us
+// whch we'll use here in our map dispatch to props as a value for a function named resetFeedback form
+
+
 //To retrieve the state, we will use the mapStateToProps() function
 // the below will return the items as props
 const mapStateToProps = state => {
@@ -26,14 +30,15 @@ const mapDispatchToProps = {
         //arrow function with parameter list of campsiteid, rating, and text 
     //in the action creater add comment -> we will passing in that data 
     addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text)),
-    fetchCampsites: () => (fetchCampsites())
+    fetchCampsites: () => (fetchCampsites()),
     //this will call the fetchCampsites action creator 
+    resetFeedbackForm: () => (actions.reset('feedbackForm'))
 };
 
 
 class Main extends Component {
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.fetchCampsites();
     }
 
@@ -41,9 +46,9 @@ class Main extends Component {
         const HomePage = () => {
             return (
                 <Home
-                campsite={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}
                 //this.props.campsites.filter --> before we were calling just the array, but now this holds
                 // isLoading, errMess properites as well, so to access the array > this.props.campsites.campsites
+                campsite={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}
                 campsitesLoading={this.props.campsites.isLoading}
                 campsitesErrMess={this.props.campsites.errMess}
                 promotion={this.props.promotions.filter(promotion => promotion.featured)[0]}
@@ -74,7 +79,7 @@ class Main extends Component {
                     <Route path='/home' component={HomePage} />
                     <Route exact path='/directory' render={() => <Directory campsites={this.props.campsites} />} />
                     <Route path='/directory/:campsiteID' component={CampsiteWithId} />
-                    <Route exact path='/contactus' component={Contact} />
+                    <Route exact path='/contactus' render={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
                     <Route exact path='/aboutus' render={()=> <About partners={this.props.partners} /> } />
                     {/* Note that unlike the <Route> for the Directory component, you use the attribute component instead of render above. That is because you do not need to pass any state data into the Contact component.  */}
                     <Redirect to='/home' />

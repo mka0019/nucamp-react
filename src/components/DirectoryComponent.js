@@ -29,6 +29,7 @@ function Directory(props) {
             </div>
         );
     });
+
     if (props.campsites.isLoading) {
         return (
             <div className="container">
@@ -49,7 +50,6 @@ function Directory(props) {
             </div>
         );
     }
-
     return (
         <div className="container">
             <div className="row">
