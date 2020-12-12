@@ -1,4 +1,3 @@
-import { COMMENTS } from '../shared/comments';
 import * as ActionTypes from './ActionTypes';
 
 //will now cause this reducer to update its part of the state
@@ -10,14 +9,20 @@ import * as ActionTypes from './ActionTypes';
 Setup a case for when the action type is add comment 
 */
 
-export const Comments = (state = COMMENTS, action) => {
-
+export const Comments = (state = { errMess: null, comments: []}, action) => {
     switch (action.type) {
+        case ActionTypes.ADD_COMMENTS:
+            return {...state, errMess: null, comments: action.payload};
+
+        case ActionTypes.COMMENTS_FAILED:
+            return {...state, errMess: action.payload};
+
         case ActionTypes.ADD_COMMENT:
             const comment = action.payload;
-            comment.id = state.length;
+            comment.id = state.comments.length;
             comment.date = new Date().toISOString();
-            return state.concat(comment);
+            return {...state, comments: state.comments.concat(comment)};
+
         default:
             return state;
     }
@@ -28,7 +33,7 @@ export const Comments = (state = COMMENTS, action) => {
     here we'll put the content of action payload into a new variable named comment.
 
     Recall that the content of action payload is an object so we can add more
-    properties to this object like this -> comment.id = state.length;
+    properties to this object like this -> comment.id = state.comment.length;
     We will add an id  which will be the length of the comments array thats stored in this part of the state
 
     We will also a Date of when the comment was submitted 

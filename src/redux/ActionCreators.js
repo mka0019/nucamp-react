@@ -1,18 +1,38 @@
 import * as ActionTypes from './ActionTypes';
-import { CAMPSITES } from '../shared/campsites'; 
+import { baseUrl } from '../shared/baseUrl';
 
-/*the wildcard(*) here thats lets us import all the named 
-  exports from the ActionTypes.js file at once
-  
-*/
 
-/*
-   Define an action creator function 
-*/
+
+export const fetchCampsites = () => dispatch => {
+    dispatch(campsitesLoading());
+
+    return fetch(baseUrl + 'campsites')
+        .then(response => response.json())
+        .then(campsites => dispatch(addCampsites(campsites)));
+        /* Notes 1*/
+};
+
+export const campsitesLoading = () => ({
+    type: ActionTypes.CAMPSITES_LOADING
+});
+
+
+export const campsitesFailed = errMess => ({
+    type: ActionTypes.CAMPSITES_FAILED,
+    payload: errMess
+});
+
+
+export const addCampsites = campsites => ({
+    type: ActionTypes.ADD_CAMPSITES,
+    payload: campsites
+});
+
+
+/* Comments */
 
 export const addComment = (campsiteId, rating, author, text) => ({
     type: ActionTypes.ADD_COMMENT,
-    //With this we can access the add comment export that we made from ActionTypes.js
     payload: {
         campsiteId: campsiteId,
         rating: rating,
@@ -20,66 +40,65 @@ export const addComment = (campsiteId, rating, author, text) => ({
         text: text
     }
 });
-// We are passing parameters that are needed to create a comment
-//This will return an object which has as its properties a type and a payload
-//Its worth nothing that, in ES6, when the idenitifer of a property is the same as its value you can actually pass as 
-//this :
-/* 
-    payload: {
-        campsiteId,
-        rating,
-        author,
-        text
-    }
 
-I will keep the top that same for now 
-*/
 
-/* We are not actually going to be using a server, for now we are going to pretend like we are
-We are going to simulate a server by simulating a brief delay using the set timeout function
-Then after that delay we'll go ahaead and add the campsite data to the state
-*/
-
-export const fetchCampsites = () => dispatch => {
-
-    dispatch(campsitesLoading());
-
-    setTimeout(() => {
-        dispatch(addCampsites(CAMPSITES));
-    }, 2000);
+export const fetchComments = () => dispatch => {    
+    return fetch(baseUrl + 'comments')
+        .then(response => response.json())
+        .then(comments => dispatch(addComments(comments)));
 };
 
-// Wrap this function in another function (redux thunk)
-// redux thunk lets us pass the store's dispatch method into the innter function
-// use the dispatch method to dispatch action campsite's loading 
-// use setTimeout to similate a brief delay of 2000 miliseconds 
-//after that delay we'll dispatch another action - add campsites along with the data from the campsites array 
-
-
-export const campsitesLoading = () => ({
-    type: ActionTypes.CAMPSITES_LOADING
-});
-
-//Standard action creator that just returns an action object and nothing else 
-//since its not being thunked, its not going to intercepted and its just gonna go 
-//straight to the reducer 
-//this action creator is being dispatched from fetchCampsites,
-//so that means that when the fetch's campsite's action is dispatched 
-//that action will dispatch this action 
-
-export const campsitesFailed = errMess => ({
-    type: ActionTypes.CAMPSITES_FAILED,
+export const commentsFailed = errMess => ({
+    type: ActionTypes.COMMENTS_FAILED,
     payload: errMess
 });
 
-//action creator for failed 
-//we'll be passing an error message into this message
-// we give it a type of campsites failed and payload will be the error message
-
-export const addCampsites = campsites => ({
-    type: ActionTypes.ADD_CAMPSITES,
-    payload: campsites
+export const addComments = comments => ({
+    type: ActionTypes.ADD_COMMENTS,
+    payload: comments
 });
 
-//this action creator will have campsites as its parameter
-// and it will be a normal action creator 
+//why is there no loading comments action? 
+
+/* Promotions */
+
+export const fetchPromotions = () => dispatch => {
+    dispatch(promotionsLoading());
+
+    return fetch(baseUrl + 'promotions')
+        .then(response => response.json())
+        .then(promotions => dispatch(addPromotions(promotions)));
+};
+
+export const promotionsLoading = () => ({
+    type: ActionTypes.PROMOTIONS_LOADING
+});
+
+export const promotionsFailed = errMess => ({
+    type: ActionTypes.PROMOTIONS_FAILED,
+    payload: errMess
+});
+
+export const addPromotions = promotions => ({
+    type: ActionTypes.ADD_PROMOTIONS,
+    payload: promotions
+});
+
+
+
+/* 
+Notes
+
+1-      //call to fetch and we'll return the result
+        //fetch must take a url, in our case it will be the baseUrl for the json server
+        //plus the campsites as thats location for the resource we want the campsite's data 
+        //a call to fetch will return a promise - when resolved the then method will the json method
+        //to convert the response from json to javascript , and that javascript will be the array of campsites
+        // the json method returns a new promise for which the converted js array is the  new response value
+        // when it resolves
+        //so that means we can chain another then method - we'dd grab that js array in this
+        //campsite's arguement once that promise resolves then we can dispatch that campsite's 
+        //argurment with the  addCampsite's action creator to be used as its payload 
+
+
+*/

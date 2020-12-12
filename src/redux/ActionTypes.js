@@ -11,4 +11,10 @@ export const CAMPSITES_FAILED = 'CAMPSITES_FAILED';
 //can update to show an error message 
 export const ADD_CAMPSITES = 'ADD_CAMPSITES';
 // this action is what we will dispatch when the campsite's data has successfully been retrieved 
-//from the server and can be safely added to the state  
+//from the server and can be safely added to the state
+  
+export const ADD_COMMENTS = 'ADD_COMMENTS';
+export const COMMENTS_FAILED = 'COMMENTS_FAILED';
+export const PROMOTIONS_LOADING = 'PROMOTIONS_LOADING';
+export const ADD_PROMOTIONS = 'ADD_PROMOTIONS';
+export const PROMOTIONS_FAILED = 'PROMOTIONS_FAILED';
