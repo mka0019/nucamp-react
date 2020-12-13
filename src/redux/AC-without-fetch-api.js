@@ -1,5 +1,5 @@
-import * as ActionTypes from './ActionTypes';
-import { CAMPSITES } from '../shared/campsites'; 
+// import * as ActionTypes from './ActionTypes';
+// import { CAMPSITES } from '../shared/campsites'; 
 
 /*the wildcard(*) here thats lets us import all the named 
   exports from the ActionTypes.js file at once

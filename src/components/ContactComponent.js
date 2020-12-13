@@ -14,33 +14,16 @@ const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 
 class Contact extends Component {
-//  constructor(props){
-//     super(props);
-//     this.state = {
-//        firstName: '',
-//        lastName: '',
-//        phoneNum: '',
-//        email: '',
-//        agree: false,
-//        contactType: 'By Phone',
-//        feedback: '',
-//        touched:{
-//            firstName: false,
-//            lastName: false,
-//            phoneNum: false,
-//            email: false
-//        }
-//     };
+ constructor(props){
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    };
   
-
-    handleSubmit(values) {
-        console.log('Current state is: ' + JSON.stringify(values));
-        //JSON.stringify --> will make a string from a Javascript object
-        alert('Current state is: ' + JSON.stringify(values));
-        //event.preventDefault(); //to prevent page from refreshing on form submission
+    handleSubmit(values){
         this.props.resetFeedbackForm();
-        //this will allow the form values to reset once the form is submitted
+        this.props.postFeedback(values);
     }
+
 
 
     render(){

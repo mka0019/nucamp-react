@@ -3,17 +3,16 @@ import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } 
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+
 // This component will be responisble for rendering the
 // Cards with the campsite details
 // we will destructure the props as parameters 
 
-
-//no longer using onClick --> so remove from params 
 function RenderDirectoryItem({campsite}){
     return(
         <Card>
             <Link to={`/directory/${campsite.id}`}>
-            <CardImg width="100%" src={baseUrl + campsite.image} alt={campsite.name} />
+                <CardImg width="100%" src={baseUrl + campsite.image} alt={campsite.name} />
                 <CardImgOverlay>
                     <CardTitle>{campsite.name}</CardTitle>
                 </CardImgOverlay>
